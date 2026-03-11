@@ -10,7 +10,7 @@ To ensure industry-standard compatibility and robust network emulation, this pro
 * **Target Machine**: Stellaris LM3S6965 Evaluation Board (Simulated via QEMU).
 * **Processor Core**: Cortex-M3 (Industry-standard RISC architecture).
 * **Hardware Abstraction**: `libopencm3` framework.
-* **Custom Board Definition**: A custom PlatformIO board configuration (`qemu_lm3s6965.json`) is used to map the exact RAM (64KB) and Flash (256KB) specifications for the emulator.
+* **Custom Board Definition**: A custom PlatformIO board configuration (`boards/qemu_lm3s6965.json`) is used to map the exact RAM (64KB) and Flash (256KB) specifications for the emulator.
 
 ## Toolchain & Development Environment
 The project utilizes a modern IDE-driven workflow using PlatformIO, ensuring seamless dependency management and build automation:
@@ -18,14 +18,14 @@ The project utilizes a modern IDE-driven workflow using PlatformIO, ensuring sea
 * **Build System & Package Manager**: PlatformIO (PIO).
 * **RTOS**: FreeRTOS Kernel (integrated via PIO `lib_deps`).
 * **Network Stack**: Lightweight IP (LwIP).
-* **Emulator**: QEMU (launched automatically via custom Python post-build scripts).
+* **Emulator**: QEMU (launched automatically via custom Python post-build scripts `run_qemu.py`).
 
 ## Software Architecture
-The codebase strictly follows a decoupled, Layered Architecture to ensure portability:
-1. **Application Layer (`main.c`)**: Implements business logic and FreeRTOS task orchestration.
-2. **Interface Layer (`network_intf.c`)**: Wraps LwIP and MQTT APIs, providing a clean interface for the application.
-3. **Driver Layer (`ethernetif.c`)**: The LwIP porting layer, bridging the network stack with the simulated hardware via FreeRTOS primitives (Tasks and Semaphores).
-4. **Hardware Abstraction Layer (HAL)**: Utilizes `libopencm3` for direct register-level access to the virtual Ethernet MAC and PHY.
+The codebase strictly follows a decoupled, Layered Architecture organized within the PlatformIO `lib` directory to ensure portability:
+1. **Application Layer (`main.c`)**: Implements business logic, FreeRTOS task orchestration, and high-level application flow.
+2. **Interface Layer (`lib/intf/`)**: Wraps LwIP and MQTT APIs, providing a clean, hardware-agnostic interface for the application.
+3. **Driver Layer (`lib/driver/`)**: The LwIP porting layer, bridging the network stack with the simulated hardware via FreeRTOS primitives (Tasks and Semaphores).
+4. **Hardware Abstraction Layer (`lib/hal/`)**: Utilizes `libopencm3` for direct register-level access to the virtual Ethernet MAC and PHY.
 
 ## Future Roadmap
 The project is designed to evolve into a complex IoT/Embedded system. Planned milestones include:
