@@ -25,7 +25,6 @@ The codebase strictly follows a decoupled, Layered Architecture organized within
 1. **Application Layer (`main.c`)**: Implements business logic, FreeRTOS task orchestration, and high-level application flow.
 2. **Interface Layer (`lib/intf/`)**: Wraps LwIP and MQTT APIs, providing a clean, hardware-agnostic interface for the application.
 3. **Driver Layer (`lib/driver/`)**: The LwIP porting layer, bridging the network stack with the simulated hardware via FreeRTOS primitives (Tasks and Semaphores).
-4. **Hardware Abstraction Layer (`lib/hal/`)**: Utilizes `libopencm3` for direct register-level access to the virtual Ethernet MAC and PHY.
 
 ## Future Roadmap
 The project is designed to evolve into a complex IoT/Embedded system. Planned milestones include:
